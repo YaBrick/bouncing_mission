@@ -1,0 +1,25 @@
+<launch>
+	<!-- Nó camera_handler.py -->
+	<arg name="ost_file" default="$(find droneifsc)/scripts/ost.yaml"/>
+	
+    <node pkg="droneifsc" type="camera_handler.py" name="camera_handler" output="screen"> 
+		<param name="image_topic" value="/camera/image_raw"/>
+		<param name="camera_info_topic" value="/camera/camera_info"/>
+		<param name="frame_id" value="camera_frame"/>
+		<param name="ost_file" value="$(arg ost_file)"/>  <!-- Path to the camera calibration file -->
+	</node>
+    
+	<!-- Nó ArUco Tracker -->
+    <node pkg="nodelet" type="nodelet" name="aruco_tracker" args="standalone aruco_opencv/ArucoTracker" output="screen">
+        <param name="cam_base_topic" value="camera/image_raw" />
+        <param name="image_is_rectified" value="false" />
+        <param name="marker_size" value="0.18" />
+    </node>
+
+    <!-- Nó pose_MAV_sender.py -->
+	<arg name="connection_string" default="/dev/ttyS0"/><!-- udp:127.0.0.1:14550 for gazebo -->
+    
+    <node pkg="droneifsc" type="pose_MAV_sender.py" name="pose_mav_sender" output="screen">
+		<!--potencial problema aqui, qualquer coisa so hardcodar no codigo--><param name="connection_string" value="$(arg connection_string)"/> <!-- Default connection string, adjust as needed -->
+	</node>
+</launch>

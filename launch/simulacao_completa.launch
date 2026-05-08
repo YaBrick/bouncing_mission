@@ -1,0 +1,7 @@
+<launch>
+
+    <node pkg="droneifsc" type="zigzag_node.py" name="zigzag_node" output="screen" />
+
+    <node pkg="droneifsc" type="visao_node.py" name="visao_node" output="screen" />
+
+</launch>
