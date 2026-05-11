@@ -1,6 +1,6 @@
 <launch>
 	<!-- Nó camera_handler.py -->
-	<arg name="ost_file" default="$(find droneifsc)/scripts/ost.yaml"/>
+	<arg name="ost_file" default="$(find bouncing_mission)/scripts/ost.yaml"/>
 	
     <node pkg="droneifsc" type="camera_handler.py" name="camera_handler" output="screen"> 
 		<param name="image_topic" value="/camera/image_raw"/>
